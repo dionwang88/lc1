@@ -1,0 +1,32 @@
+{{!
+Partial template for a single billing and payment item to be displayed on the Billing And Payment tab of the Agent Extranet
+
+@author    Qian Wang <qwang@wayfair.com>
+@copyright 2016 Wayfair LLC - All rights reserved
+}}
+
+<tr class="js-bp-items billing_payment_items">
+    <td></td>
+    <td><input class="number_input js-carton-count-box carton_count_input" type="text" value="{{opi_corrected_carton_count}}" {{#readOnly}}disabled{{/readOnly}}/></td>
+    <td>{{opi_qty}}</td>
+    <td>
+        <input class="number_input js-weight-box weight_box_input" type="text" value="{{opi_corrected_weight}}" {{#readOnly}}disabled{{/readOnly}}/>
+        {{#proprated_opi_weights_flag}}
+            <label class="js-pallet-weight">{{-prorated_opi_weights}}</label>';
+        {{/proprated_opi_weights_flag}}
+    </td>
+    <td>-</td>
+    <td>-</td>
+    <td>{{opi_overpack_cost}}</td>
+    <td>-</td>
+    <td>{{opt_name}}</td>
+    <td colspan="2">{{od_pr_name}}</td>
+    {{^readOnly}}
+        <td>
+            <div class="fl">
+                <input class="js-carton-update item_update" type="button" data-ask_for_approval="2" value="{{update}}"/>
+            </div>
+        </td>
+        <td><div class="msg">{{#updating}}updating...{{/updating}}</div></td>
+    {{/readOnly}}
+</tr>

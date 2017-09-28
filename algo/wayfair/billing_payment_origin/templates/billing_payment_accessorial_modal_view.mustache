@@ -1,0 +1,33 @@
+{{!
+Mustache template used to display the accessorial cost details of a billing payment record
+
+@author    Qian Wang <qwang@wayfair.com>
+@copyright 2016 Wayfair, LLC - All rights reserved
+}}
+{{#success}}
+    <div class="js-payment-accessorial-view page-content">
+        <table class="wfe_table">
+            <thead>
+            <tr class="table_header_row">
+                <th class="table_header">Accessorial</th>
+                <th class="table_header">RequestedQty</th>
+                <th class="table_header">RequestedPrice</th>
+                <th class="table_header">ApprovedQty</th>
+                <th class="table_header">ApprovedPrice</th>
+                <th class="table_header">Note</th>
+                <th class="table_header">Approved?</th>
+            </tr>
+            <tbody>
+            {{#rows}}
+                {{>extranet/overpack/billing_payment/billing_payment_accessorial_modal_row}}
+            {{/rows}}
+            </tbody>
+            </thead>
+        </table>
+    </div>
+{{/success}}
+{{^success}}
+    <div>
+        <div class="msg">{{{message}}}</div>
+    </div>
+{{/success}}

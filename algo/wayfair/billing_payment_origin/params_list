@@ -1,0 +1,52 @@
+public function update_status_to_approved($slm_ids, $saa_ids) {
+  $pdo = PDO::new_instance('OT');
+  $update_sql = '';
+
+  try {
+    $pdo->beginTransaction();
+    if (!empty($slm_ids)) {
+      $params = PDO::params_for_list(count($slm_ids), 'slm_id');
+      $update_sql = 'UPDATE tblShippingLoadManifest
+                   SET SlmInvoiceStatus = 2 // approved
+                   WHERE SlmID IN ('. $params .') AND SlmInvoiceStatus = 0; ';
+
+      $statement = PDO::new_statement('OT', $update_sql);
+      $statement->bindValuesList(':slm_id', $slm_ids, PDO::PARAM_INT);
+
+      if (!$statement->execute()) {
+        $error = 'Failed to update the status slm_ids to approved';
+        $this->get_logger()->error($error);
+        return ['errors' => $error];
+      }
+    }
+
+    if (!empty($saa_ids)) {
+      $params = PDO::params_for_list(count($saa_ids), 'saa_id');
+      $update_sql .= 'UPDATE tblServiceAgentAttempt
+                  SET SaaInvoiceStatus = 2, // approved
+                      SaaInvoiceDate = getdate()
+                  WHERE SaaID IN ('. $params .') AND SaaInvoiceStatus = 0;';
+
+      $statement = PDO::new_statement('OT', $update_sql);
+      $statement->bindValuesList(':saa_id', $slm_ids, PDO::PARAM_INT);
+
+      if (!$statement->execute()) {
+        $error = 'Failed to update the status saa_ids to approved';
+        $this->get_logger()->error($error);
+        return ['errors' => $error];
+      }
+    }
+
+    $pdo->commit();
+
+    if (!empty($slm_ids)) {
+      foreach ($slm_ids as $slm_id) {
+        $slm_log_message = 'Approving invoice for ' . $slm_id;
+        log_slm_action($slm_log_message, SLM_INVOICE_STATUS_UPDATE, $slm_id);
+      }
+    }
+  }catch (\Exception $exe) {
+    $this->get_logger()->error("Action of update_status_to_approved() error");
+    $pdo->rollBack();
+  }
+}

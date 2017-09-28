@@ -1,0 +1,80 @@
+//
+//// Billinf And Payment tab on the agent extranet
+//// @template  extranet/overpack/billing_payment/billing_payment_view.mustache
+//// @author    Qian Wang <qwang@wayfair.com>
+//// @copyright 2016 Wayfair LLC - All rights reserved
+//
+
+@import 'extranet/partials/base/var_extranet';
+
+.print_documents_button {
+  right: 15px;
+  bottom: 15px;
+  position: fixed;
+}
+
+.search_box {
+  border: 1px solid $border-color--base;
+  height: 205px;
+}
+
+.search_header,
+.route_row {
+  border-bottom: 1px solid $border-color--base;
+}
+
+.date_filter,
+.route_filter {
+  min-width: 150px;
+}
+
+.billing_payment_header_row {
+  background-color: $bg-color--primary;
+  color: $text-color--white;
+}
+
+.billing_payment_row {
+  background-color: $bg-color--white;
+}
+
+.loading_icon_center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid #00FF00;
+  padding: 10px;
+}
+
+.keywords.wfe_input {
+  width: 8%;
+}
+
+.carton_count_input.number_input{
+  width:25px;
+}
+
+.weight_box_input.number_input{
+  width:32px;
+}
+
+.item_update{
+  padding: 0 2px;
+}
+
+.billing_payment_items{
+  background-color: $bg-color--white;
+}
+
+.billing_table {
+  margin-bottom: 25px;
+  border-collapse: collapse;
+  border-spacing: 1;
+  display: table;
+  width: 100%;
+}
+.table_row_odd {
+  background-color: #fafafa;
+}
+
+.table_row_even {
+  background-color: #f2f2f4;
+}

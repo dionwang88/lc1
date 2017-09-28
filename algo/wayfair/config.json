@@ -1,0 +1,122 @@
+{
+    "php": {
+        "name": "Audit_History",
+        "author": "Qian Wang <qwang@wayfair.com>",
+        "desc": "of Audit History module",
+        "footer": "2016 Wayfair LLC - All rights reserved",
+        "dao": {
+            "namespace": "WF\\Shared\\DAOs\\Audit_History",
+            "location": "php\\includes\\daos\\audit_history",
+            "extends": "\\WF\\Shared\\DAOs\\Transportation\\Base_DAO",
+            "methods": {
+                "load_audit_databases": {
+                    "desc": "loads all the audit database names in database server",
+                    "params":{
+                    },
+                    "return": "array"
+                },
+                "load_audit_tables": {
+                    "desc": "loads all the tables in a given database name",
+                    "params": {
+                        "database_name": {"type":"string", "desc":"The audit history database name"}
+                    },
+                    "return": "array"
+                },
+                "load_audit_items": {
+                    "desc": "loads all the items satisfiy the query condition",
+                    "params": {
+                        "database_name": {"type":"string", "desc":"The audit history database name"},
+                        "table_name": {"type":"string", "desc":"The audit history table name"},
+                        "primary_key":{"type":"int", "desc":"The item primary key"},
+                        "top_k": {"type":"int", "desc":"Retrieve top k audit history items"}
+                    },
+                    "return": "array"
+                }
+            }
+        },
+        "model": {
+            "namespace": "WF\\Shared\\Models\\Audit_History",
+            "location": "php\\includes\\models\\audit_history",
+            "extends": "\\WF\\Shared\\Models\\Transportation\\Base_Model",
+            "properties": {
+                "database_name": {"type": "string", "desc": "The database name in the server"},
+                "table_name": {"type": "string", "desc": "The table name in a given database"},
+                "primary_key_name": {"type": "string", "desc": "The primary key name in a given table"},
+                "primary_key_value": {"type": "int", "desc": "The primary key value in a given table"},
+                "item_num": {"type": "int", "desc": "The number items will be displayed"}
+            }
+        },
+        "data": {
+            "namespace": "WF\\Shared\\Models\\Audit_History",
+            "location": "php\\includes\\models\\audit_history",
+            "extends": "\\WF\\Extranet\\Mustache\\Mustache_Data"
+        },
+        "collection": {
+            "namespace": "WF\\Shared\\Models\\Audit_History",
+            "location": "php\\includes\\models\\audit_history",
+            "extends": "\\WF\\Shared\\Models\\Transportation\\Base_Collection"
+        },
+        "view": {
+            "namespace": "WF\\Extranet\\Mustache\\Overpack\\Audit_History",
+            "location": "php\\extranet\\app_includes\\mustache\\overpack\\audit_history",
+            "extends": "\\WF\\Extranet\\Mustache\\Mustache_Data",
+            "properties": {
+                "slm_id": {"type": "int", "desc": "Truckload shipment manifest id"},
+                "saa_id": {"type": "int", "desc": "Saa ID"},
+                "ts_id": {"type": "int", "desc": "carrier id"}
+            }
+        },
+        "controller": {
+            "namespace": "WF\\Extranet\\Controllers\\Overpack",
+            "location": "php\\extranet\\app_includes\\controllers\\overpack",
+            "extends": "\\WF\\Extranet\\Controllers\\Overpack\\Base_Controller"
+        }
+    },
+    "resources": {
+        "location": "resources\\st4\\includes\\js\\amd_modules\\extranet\\models\\overpack\\audit_history",
+        "app_model": {
+            "dependencies": {
+                "wf_model_base": "BaseModel",
+                "jquery": "$"
+            }
+        },
+        "app_view": {
+            "dependencies": {
+                "jquery": "$",
+                "wf_tungsten_view_base": "BaseView"
+            }
+        },
+        "collection": {
+            "dependencies": {
+                "wf_collection_base": "BaseCollection"
+            },
+            "url": "/a/overpack/audit_history/data"
+        },
+        "view": {
+            "dependencies": {
+                "wf_tungsten_view_base": "BaseView"
+            }
+        },
+        "model": {
+            "dependencies": {
+                "wf_model_base": "BaseModel"
+            }
+        },
+        "scss": {
+            "location": "resources\\st4\\includes\\scss\\extranet\\desktop\\audit_history"
+        }
+    },
+    "templates": {
+        "location": "templates\\raw\\extranet\\overpack\\audit_history",
+        "form": {
+            "inputs": {
+                "1": {"name": "database_name", "type": "text"},
+                "2": {"name": "table_name", "type": "text"},
+                "3": {"name": "primary_key", "type": "text"}
+            },
+            "buttons": {
+                "1": {"name": "search", "type": "submit"}
+            }
+        }
+    }
+}
